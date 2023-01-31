@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const Register = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
-    const [pass, setPass] = useState('');
-    const [confirmPass, setConfirmPass] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
     const submitHandler = (e) => {
         e.preventDefault();
         // console.log(email, name, pass, confirmPass);for test
@@ -36,8 +38,8 @@ const Register = () => {
                     <div className="pb-4">
                         <label htmlFor="password">Password</label>
                         <input
-                            value={pass}
-                            onChange={(e) => setPass(e.target.value)}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className="w-full rounded-xl py-3 px-4"
                             type="text"
                             placeholder="enter your password"
@@ -46,8 +48,8 @@ const Register = () => {
                     <div className="pb-4">
                         <label htmlFor="confirm password">Confirm Password</label>
                         <input
-                            value={confirmPass}
-                            onChange={(e) => setConfirmPass(e.target.value)}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             className="w-full rounded-xl py-3 px-4"
                             type="text"
                             placeholder="enter your password"
@@ -63,7 +65,7 @@ const Register = () => {
                     </div>
                 </form>
                 <div className="flex items-center justify-center">
-                    <button type="button" className=" font-bold text-yellow-900">
+                    <button className=" font-bold text-yellow-900" onClick={() => navigate('/')}>
                         Log in
                     </button>
                 </div>
