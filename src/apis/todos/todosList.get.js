@@ -1,7 +1,9 @@
 import { baseURL } from '../../utils';
 import { useState } from 'react';
 export const useGetData = () => {
-    const [data, setData] = useState({});
+    const [data, setData] = useState({
+        data: null,
+    });
     const fetchData = async () => {
         try {
             const userInfo = localStorage.userInfo;
@@ -11,15 +13,18 @@ export const useGetData = () => {
                     Authorization: `${token}`,
                 },
             });
-
-            if (response == '') {
-                throw 'login http status not 200';
+            const responseData = await response.json();
+            console.log(responseData);
+            if (data) {
+                setData({ data: responseData });
+            } else {
+                throw 'http status is not 201';
             }
-            const data = await response.json();
-            setData(data);
-            //mistake with data in useState
+
+            //mistake with data in useState?
         } catch (error) {
-            console.log(error.message);
+            console.error(error);
+            setData({ data: null });
         }
     };
     return { fetchData, data };
