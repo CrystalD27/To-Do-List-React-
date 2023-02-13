@@ -27,7 +27,7 @@ const Home = () => {
 
     useEffect(() => {
         if (userInfo) {
-            fetchData(data);
+            fetchData(items);
         } else if (!userInfo) {
             console.log('no auth');
         }
