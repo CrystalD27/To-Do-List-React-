@@ -14,7 +14,7 @@ const Home = () => {
     const [newItem, setNewItem] = useState('');
     const navigate = useNavigate();
     const userInfo = localStorage.userInfo;
-    const nickname = JSON.parse(userInfo).nickname;
+    // const nickname = JSON.parse(userInfo).nickname;
 
     //log out
     const logOutHandler = () => {
@@ -99,7 +99,7 @@ const Home = () => {
                     <div className="flex">
                         <button type="button" className="mr-6">
                             <span className="text-xl font-bold text-blue-500 underline">
-                                {nickname}
+                                {/* {nickname} */}
                             </span>{' '}
                             to do list
                         </button>
