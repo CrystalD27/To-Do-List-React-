@@ -2,22 +2,41 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomePage from './pages/home-page';
-import LogIn from './pages/log-in';
+import Home from './pages/home';
+import Login from './pages/login';
 import Register from './pages/register';
+import NotFound from './pages/not-found';
+import AuthRoute from './components/auth-route';
+import UnAuthRoute from './components/unauth-route';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <HomePage />,
+        element: (
+            <AuthRoute>
+                <Home />
+            </AuthRoute>
+        ),
     },
     {
-        path: '/log-in',
-        element: <LogIn />,
+        path: '/login',
+        element: (
+            <UnAuthRoute>
+                <Login />
+            </UnAuthRoute>
+        ),
     },
     {
         path: '/register',
-        element: <Register />,
+        element: (
+            <UnAuthRoute>
+                <Register />
+            </UnAuthRoute>
+        ),
+    },
+    {
+        path: '*',
+        element: <NotFound />,
     },
 ]);
 
