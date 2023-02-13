@@ -2,7 +2,6 @@ import { MdAssignmentTurnedIn } from 'react-icons/md';
 import { FiPlus } from 'react-icons/fi';
 import background from '../../assets/img/bg.png';
 import { CgClose } from 'react-icons/cg'; //CgShapeSquare, CgCheck,
-import { useTodosAdd } from '../../apis/todos/todosAdd.post';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { baseURL } from '../../utils';
