@@ -26,7 +26,7 @@ const Home = () => {
 
     useEffect(() => {
         if (userInfo) {
-            fetchData(items);
+            fetchData(data);
         } else if (!userInfo) {
             console.log('no auth');
         }
@@ -50,7 +50,7 @@ const Home = () => {
                         content: `${item.value}`,
                     },
                 };
-                const userInfo = localStorage.userInfo;
+                // const userInfo = localStorage.userInfo;
                 const token = JSON.parse(userInfo).authToken;
                 const response = await fetch(baseURL + 'todos', {
                     method: 'POST',
@@ -62,7 +62,7 @@ const Home = () => {
                 });
 
                 const data = await response.json();
-
+                console.log(data);
                 setItemData(data);
                 console.log(itemData, data); // get data?itemData?
                 fetchData(data);
