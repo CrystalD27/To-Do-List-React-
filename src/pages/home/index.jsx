@@ -17,10 +17,10 @@ const Home = () => {
     const navigate = useNavigate();
     const userInfo = localStorage.userInfo;
 
-    // const GetNickname = () => {
-    //     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    //     return userInfo.nickname;
-    // };
+    const GetNickname = () => {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        return userInfo.nickname;
+    };
 
     const logOutHandler = () => {
         localStorage.clear(userInfo);
@@ -124,6 +124,22 @@ const Home = () => {
             console.error(error);
         }
     };
+    const [isToDoChecked, setIsToDoCheked] = useState(false);
+    const [toDoState, setToDoState] = useState('all');
+    const toDoStateList = [
+        {
+            toToState: 'all',
+            content: 'all',
+        },
+        {
+            toDoState: 'active',
+            contet: 'active',
+        },
+        {
+            toDoState: 'completed',
+            content: 'completed',
+        },
+    ];
     const checkToDo = async (id) => {
         await fetch(baseURL + 'todos' + `/${id}` + '/toggle', {
             method: 'PATCH',
@@ -133,12 +149,20 @@ const Home = () => {
             },
         });
     };
-    const checkHandler = async (id) => {
+    const checkHandler = async (id, completed_at) => {
+        if (completed_at === null) {
+            setIsToDoCheked(false); //{作為畫線判斷式}
+        } else {
+            setIsToDoCheked(true);
+        }
         try {
             await checkToDo(id);
+            await getTodoList();
+            Swal.fire('The state has been updated');
         } catch (error) {
             console.error(error);
         }
+        console.log(isToDoChecked);
     };
 
     return (
@@ -159,8 +183,8 @@ const Home = () => {
                     <div className="flex">
                         <button type="button" className="mr-6">
                             <span className="text-xl font-bold text-blue-500 underline">
-                                {/* <GetNickname /> */}
-                            </span>{' '}
+                                <GetNickname />
+                            </span>
                             to do list
                         </button>
                         <button onClick={logOutHandler}>Log out</button>
@@ -210,7 +234,7 @@ const Home = () => {
                                 <li className="relative border-b">
                                     <button
                                         type="button"
-                                        className=" px-12  py-4 content-[''] after:absolute after:left-0 after:bottom-0 after:h-[3px]  after:w-0 after:bg-stone-700  hover:text-black hover:after:w-full"
+                                        className="px-12  py-4 content-[''] after:absolute after:left-0 after:bottom-0 after:h-[3px]  after:w-0 after:bg-stone-700  hover:text-black hover:after:w-full"
                                     >
                                         Completed
                                     </button>
@@ -236,21 +260,12 @@ const Home = () => {
                                                     <input
                                                         type="checkbox"
                                                         value={!!todo.completed_at} //!!Q2 make it to boolean cuz it can't be null
-                                                        onClick={() => {
-                                                            checkHandler(todo.id);
+                                                        onChange={() => {
+                                                            checkHandler(todo.id, todo.complted_at);
                                                         }}
                                                         className="relative mr-3 h-6 w-6 rounded-full shadow"
                                                     />
 
-                                                    {/* {deleteSingleToDo.id &&
-                                                    todo.id === deleteSingleToDo.id ? (
-                                                        <CgClose
-                                                            // value={deleteSingleToDo.id}
-                                                            className={`absolute right-0 bottom-4 text-xl ${
-                                                                isShownCross ? '' : 'hidden'
-                                                            }`}
-                                                        />
-                                                    ) : ( */}
                                                     <CgClose
                                                         type="button"
                                                         onClick={() => {
@@ -263,6 +278,9 @@ const Home = () => {
                                                     {editingState.isEditing &&
                                                     todo.id === editingState.id ? (
                                                         <input
+                                                            className={`${
+                                                                isToDoChecked ? 'line-through' : ''
+                                                            }`}
                                                             value={editingState.content}
                                                             onChange={(e) => {
                                                                 setEditingState((prev) => ({
@@ -296,7 +314,7 @@ const Home = () => {
                                         <p>
                                             <span className="mr-2">
                                                 {todoListState.data?.todos?.filter(
-                                                    (item) => !!item.completed_at
+                                                    (item) => !item.completed_at
                                                 )?.length ?? 0}
                                                 {/* ?? if its undefined or null, it will excecute later which shows 0 */}
                                             </span>
