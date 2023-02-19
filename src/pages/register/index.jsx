@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Swal from 'sweetalert2';
-// import Header from '../../components/header';
+import Header from '../../components/header';
 import { useRegister } from '../../apis/users/register';
 
 const Registration = () => {
@@ -42,7 +42,7 @@ const Registration = () => {
         <>
             <section className="bg">
                 <div className=" flex items-center  justify-center gap-28 py-20 ">
-                    {/* <Header /> */}
+                    <Header />
                     <div className="w-1/4">
                         <h2 className="pb-6 text-center text-2xl font-bold">Creat a new account</h2>
                         <form onSubmit={handleSubmit(onSubmit)}>
