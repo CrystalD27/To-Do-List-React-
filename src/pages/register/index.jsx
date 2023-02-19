@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Swal from 'sweetalert2';
-import Header from '../../components/header';
+import Header from '../../components/header-temp';
 import { useRegister } from '../../apis/users/register';
 
 const Registration = () => {
