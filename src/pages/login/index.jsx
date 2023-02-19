@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Swal from 'sweetalert2';
-import Header from '../../components/header';
+// import Header from '../../components/header';
 import { useLogIn } from '../../apis/users/log-in';
 
 const Login = () => {
@@ -45,7 +45,7 @@ const Login = () => {
         <>
             <section className="bg">
                 <div className=" flex items-center justify-center gap-28 px-3  py-20">
-                    <Header />
+                    {/* <Header /> */}
                     <section className="w-1/4 ">
                         <h2 className="text-center text-2xl font-bold ">Making A To Do List </h2>
                         <h3 className="pb-6 text-center font-bold text-yellow-900">
