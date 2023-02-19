@@ -7,6 +7,7 @@ import Header from '../../components/header';
 import { useRegister } from '../../apis/users/register';
 
 const Registration = () => {
+    const test = () => {};
     const navigate = useNavigate();
     const { fetchRegister, registerState } = useRegister();
     const {
