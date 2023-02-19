@@ -10,11 +10,12 @@ export const useLogIn = () => {
 
     const fetchLogIn = async ({ email, password }) => {
         try {
-            setLoginState({
+            setLoginState((prev) => ({
+                ...prev,
                 isLoading: true,
                 isError: false,
                 data: null,
-            });
+            }));
             const payload = {
                 user: {
                     email,
@@ -33,7 +34,8 @@ export const useLogIn = () => {
             console.log(responseData);
             if (response.status === 200) {
                 const authToken = response.headers.get('authorization');
-                setLoginState({
+                setLoginState((prev) => ({
+                    ...prev,
                     isLoading: false,
                     isError: false,
                     data: {
@@ -43,17 +45,18 @@ export const useLogIn = () => {
                             authToken,
                         },
                     },
-                });
+                }));
             } else {
                 throw 'login http status not 200';
             }
         } catch (error) {
             console.error(error);
-            setLoginState({
+            setLoginState((prev) => ({
+                ...prev,
                 isLoading: false,
                 isError: true,
                 data: null,
-            });
+            }));
         }
     };
 

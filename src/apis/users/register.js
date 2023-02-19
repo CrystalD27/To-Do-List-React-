@@ -9,11 +9,12 @@ export const useRegister = () => {
     });
     const fetchRegister = async ({ email, nickname, password }) => {
         try {
-            setRegisterState({
+            setRegisterState((prev) => ({
+                ...prev,
                 isLoading: true,
-                isError: false,
-                data: null,
-            });
+                // isError: false,
+                // data: null,
+            }));
             const payload = {
                 user: {
                     email,
@@ -32,21 +33,23 @@ export const useRegister = () => {
             const responseData = await response.json();
             console.log(responseData);
             if (response.status === 201) {
-                setRegisterState({
+                setRegisterState((prev) => ({
+                    ...prev,
                     isLoading: false,
-                    isError: false,
+                    // isError: false,
                     data: responseData,
-                });
+                }));
             } else {
                 throw 'login http status not 201';
             }
         } catch (error) {
             console.error(error);
-            setRegisterState({
-                isLoading: false,
+            setRegisterState((prev) => ({
+                ...prev,
+                // isLoading: false,
                 isError: true,
-                data: null,
-            });
+                // data: null,
+            }));
         }
     };
     return {

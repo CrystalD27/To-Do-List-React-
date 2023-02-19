@@ -1,11 +1,11 @@
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useRef, useEffect } from 'react';
-import Header from '../../components/Header';
-import { useRegister } from '../../apis/users/register.post';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-
 import Swal from 'sweetalert2';
+import Header from '../../components/header';
+import { useRegister } from '../../apis/users/register';
+
 const Registration = () => {
     const navigate = useNavigate();
     const { fetchRegister, registerState } = useRegister();

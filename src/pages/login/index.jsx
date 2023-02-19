@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import Header from '../../components/Header';
-import { useLogIn } from '../../apis/users/log-in.post';
 import Swal from 'sweetalert2';
+import Header from '../../components/header';
+import { useLogIn } from '../../apis/users/log-in';
 
 const Login = () => {
     const navigate = useNavigate();
