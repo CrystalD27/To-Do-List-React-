@@ -7,6 +7,7 @@ import Header from '../../components/header';
 import { useLogIn } from '../../apis/users/log-in';
 
 const Login = () => {
+    const test = () => {};
     const navigate = useNavigate();
 
     const { fetchLogIn, loginState } = useLogIn();
