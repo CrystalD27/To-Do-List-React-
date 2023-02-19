@@ -16,7 +16,7 @@ const Home = () => {
     const [newTodo, setNewTodo] = useState('');
     const navigate = useNavigate();
     const userInfo = localStorage.userInfo;
-    // const [isDone, setIsDone] = useState(false);
+    const [isDone, setIsDone] = useState(false);
 
     const GetNickname = () => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
