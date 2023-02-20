@@ -17,10 +17,10 @@ const Home = () => {
     const navigate = useNavigate();
     const userInfo = localStorage.userInfo;
 
-    const GetNickname = () => {
-        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-        return userInfo.nickname;
-    };
+    // const GetNickname = () => {
+    //     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    //     return userInfo.nickname;
+    // };
 
     const logOutHandler = () => {
         localStorage.clear(userInfo);
@@ -183,7 +183,7 @@ const Home = () => {
                     <div className="flex">
                         <button type="button" className="mr-6">
                             <span className="text-xl font-bold text-blue-500 underline">
-                                <GetNickname />
+                                {/* <GetNickname /> */}
                             </span>
                             to do list
                         </button>
