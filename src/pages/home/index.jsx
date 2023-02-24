@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Header } from '../../components/header';
-import { AddNewToDo } from './add-new-todo';
+import { AddNewToDo } from './todo-add-new';
 import { ToDoList } from './todo-list';
 import { ToDoFooter } from './todo-footer';
 import { useGetTodoList } from '../../apis/todos/get-todo-list';
@@ -23,31 +23,18 @@ export const Home = () => {
         },
     ];
     const [typeState, setTypeState] = useState(typeList[0].type);
-    let todoList = [];
-
-    if (todoListState.data !== null) {
-        if (typeState === 'all') {
-            todoList = todoListState.data.todos;
-        } else if (typeState === 'active') {
-            todoList = todoListState.data.todos.filter((todo) => todo.completed_at === null);
-        } else if (typeState === 'completed') {
-            todoList = todoListState.data.todos.filter((todo) => todo.completed_at !== null);
+    const todoList = useMemo(() => {
+        if (todoListState.data === null) {
+            return [];
         }
-    }
-    // const todoList = useMemo(() => {
-    //     // 預防資料為空
-    //     if (todoListState.data === null) {
-    //         return [];
-    //     }
-    //     // 已有資料，進一步做篩選
-    //     if (typeState === 'all') {
-    //         return todoListState.data.todos;
-    //     } else if (typeState === 'active') {
-    //         return todoListState.data.todos.filter((todo) => todo.completed_at === null);
-    //     } else if (typeState === 'completed') {
-    //         return todoListState.data.todos.filter((todo) => todo.completed_at !== null);
-    //     }
-    // }, [todoListState.data, typeState]);
+        if (typeState === 'all') {
+            return todoListState.data.todos;
+        } else if (typeState === 'active') {
+            return todoListState.data.todos.filter((todo) => todo.completed_at === null);
+        } else if (typeState === 'completed') {
+            return todoListState.data.todos.filter((todo) => todo.completed_at !== null);
+        }
+    }, [todoListState.data, typeState]);
 
     useEffect(() => {
         getTodoList();
