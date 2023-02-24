@@ -1,3 +1,6 @@
 node_modules
 dist
 .DS_Store
+src/pages/home/add-new-todo.jsx
+src/pages/home/index.jsx
+src/pages/home/todo-list.jsx
