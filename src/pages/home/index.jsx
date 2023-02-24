@@ -1,328 +1,91 @@
-import { MdAssignmentTurnedIn } from 'react-icons/md';
-import { FiPlus } from 'react-icons/fi';
-import background from '../../assets/img/bg.png';
-import { CgClose } from 'react-icons/cg'; //CgShapeSquare, CgCheck,
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { Header } from '../../components/header';
+import { AddNewToDo } from './add-new-todo';
+import { ToDoList } from './todo-list';
+import { ToDoFooter } from './todo-footer';
 import { useGetTodoList } from '../../apis/todos/get-todo-list';
-import { useAddToDo } from '../../apis/todos/add-todo';
-// import { useDeleteToDo } from '../../apis/todos/delete-todo';
-import { baseURL, getToken } from '../../utils';
-// import { useEditToDo } from '../../apis/todos/edit-todo';
 
-const Home = () => {
-    const [isShownCross, setIsShownCross] = useState(false);
-    const [newTodo, setNewTodo] = useState('');
-    const navigate = useNavigate();
-    const userInfo = localStorage.userInfo;
-
-    // const GetNickname = () => {
-    //     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    //     return userInfo.nickname;
-    // };
-
-    const logOutHandler = () => {
-        localStorage.clear(userInfo);
-        navigate('/login');
-    };
-
+export const Home = () => {
     const { todoListState, getTodoList } = useGetTodoList();
-    const { addToDoState, addToDo } = useAddToDo();
-    // const { deleteToDo } = useDeleteToDo();
-    // const { editToDo, editToDoState } = useEditToDo();
-    useEffect(() => {
-        getTodoList();
-    }, []); //useEffect lifetime will interfer the data.map because first time it will be
 
-    const addItemHandler = async () => {
-        if (newTodo === '') {
-            Swal.fire('Please enter content'); //if the content is empty, it will be stored to arry,,,how to avoid it
-            return;
-        }
-
-        try {
-            await addToDo({ content: newTodo });
-            if (addToDoState.isError) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                });
-                return;
-            } else {
-                setNewTodo('');
-                Swal.fire('The item has been added');
-            }
-            await getTodoList();
-            if (todoListState.isError) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                });
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    const [editingState, setEditingState] = useState({
-        id: null,
-        content: null,
-        isEditing: false,
-    });
-    const editingHandler = (id, content) => {
-        setEditingState({
-            id,
-            content,
-            isEditing: true,
-        });
-    };
-
-    const editToDo = async ({ content }) => {
-        try {
-            const payload = {
-                todo: { content },
-            };
-            await fetch(baseURL + 'todos' + `/${editingState.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: getToken(),
-                },
-                body: JSON.stringify(payload),
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const updateToDoHandler = async () => {
-        try {
-            await editToDo({ content: editingState.content });
-            await getTodoList();
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    //delete single item
-    const deleteToDo = async (id) => {
-        await fetch(baseURL + 'todos' + `/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: getToken(),
-            },
-        });
-    };
-    const deleteHandler = async (id) => {
-        try {
-            await deleteToDo(id);
-            await getTodoList();
-            Swal.fire('The item has been deleted');
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    const [isToDoChecked, setIsToDoCheked] = useState(false);
-    const [toDoState, setToDoState] = useState('all');
-    const toDoStateList = [
+    const typeList = [
         {
-            toToState: 'all',
-            content: 'all',
+            type: 'all',
+            text: 'All',
         },
         {
-            toDoState: 'active',
-            contet: 'active',
+            type: 'active',
+            text: 'Active',
         },
         {
-            toDoState: 'completed',
-            content: 'completed',
+            type: 'completed',
+            text: 'Completed',
         },
     ];
-    const checkToDo = async (id) => {
-        await fetch(baseURL + 'todos' + `/${id}` + '/toggle', {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: getToken(),
-            },
-        });
-    };
-    const checkHandler = async (id, completed_at) => {
-        if (completed_at === null) {
-            setIsToDoCheked(false); //{作為畫線判斷式}
-        } else {
-            setIsToDoCheked(true);
+    const [typeState, setTypeState] = useState(typeList[0].type);
+    let todoList = [];
+
+    if (todoListState.data !== null) {
+        if (typeState === 'all') {
+            todoList = todoListState.data.todos;
+        } else if (typeState === 'active') {
+            todoList = todoListState.data.todos.filter((todo) => todo.completed_at === null);
+        } else if (typeState === 'completed') {
+            todoList = todoListState.data.todos.filter((todo) => todo.completed_at !== null);
         }
-        try {
-            await checkToDo(id);
-            await getTodoList();
-            Swal.fire('The state has been updated');
-        } catch (error) {
-            console.error(error);
-        }
-        console.log(isToDoChecked);
-    };
+    }
+    // const todoList = useMemo(() => {
+    //     // 預防資料為空
+    //     if (todoListState.data === null) {
+    //         return [];
+    //     }
+    //     // 已有資料，進一步做篩選
+    //     if (typeState === 'all') {
+    //         return todoListState.data.todos;
+    //     } else if (typeState === 'active') {
+    //         return todoListState.data.todos.filter((todo) => todo.completed_at === null);
+    //     } else if (typeState === 'completed') {
+    //         return todoListState.data.todos.filter((todo) => todo.completed_at !== null);
+    //     }
+    // }, [todoListState.data, typeState]);
+
+    useEffect(() => {
+        getTodoList();
+    }, []);
 
     return (
-        <section
-            className="h-screen"
-            style={{
-                backgroundImage: `url(${background})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-            }}
-        >
+        <section className="h-screen bg-[url('assets/img/bg.png')] bg-cover bg-no-repeat">
             <div className="px-9 pt-4">
-                <nav className="flex justify-between">
-                    <div className="flex items-center justify-center">
-                        <MdAssignmentTurnedIn />
-                        <h3 className="font-bold">ONLINE TODO LIST</h3>
-                    </div>
-                    <div className="flex">
-                        <button type="button" className="mr-6">
-                            <span className="text-xl font-bold text-blue-500 underline">
-                                {/* <GetNickname /> */}
-                            </span>
-                            to do list
-                        </button>
-                        <button onClick={logOutHandler}>Log out</button>
-                    </div>
-                </nav>
-
-                <div
-                    className="container mt-10 flex justify-center
-                border pb-6"
-                >
-                    <div className=" todoList_content flex  flex-col rounded-xl border py-4">
-                        <div className="inputBox relative flex justify-center">
-                            <input
-                                type="text"
-                                className="  w-full rounded-xl border py-3 pl-4"
-                                placeholder="Add new to do.."
-                                onChange={(e) => setNewTodo(e.target.value)}
-                                value={newTodo} //two way binding
-                            ></input>
-                            <button
-                                type="button"
-                                onClick={addItemHandler}
-                                className="absolute right-2 top-2"
-                            >
-                                <FiPlus className=" rounded-xl bg-black text-4xl text-white " />
-                            </button>
-                        </div>
-                        <div className="todoList_title mt-4  rounded-xl border bg-white pb-8">
+                <Header />
+                <div className="container mt-10 flex justify-center pb-6">
+                    <div className="flex flex-col rounded-xl py-4">
+                        <AddNewToDo todoListState={todoListState} getTodoList={getTodoList} />
+                        <div className="todoList_title mt-4 rounded-xl bg-white pb-8">
                             <ul className="todoList_tab flex justify-between text-stone-500">
-                                <li className="relative border-b">
-                                    <button
-                                        type="button"
-                                        className="  px-14 py-4 content-[''] after:absolute  after:left-0 after:bottom-0  after:h-[3px] after:w-0  after:bg-stone-700 hover:text-black hover:after:w-full"
-                                    >
-                                        Overview
-                                    </button>
-                                </li>
-
-                                <li className="relative border-b ">
-                                    <button
-                                        type="button"
-                                        className=" py-4  px-16 content-[''] after:absolute after:left-0 after:bottom-0 after:h-[3px] after:w-0 after:bg-stone-700  hover:text-black hover:after:w-full"
-                                    >
-                                        Active
-                                    </button>
-                                </li>
-                                <li className="relative border-b">
-                                    <button
-                                        type="button"
-                                        className="px-12  py-4 content-[''] after:absolute after:left-0 after:bottom-0 after:h-[3px]  after:w-0 after:bg-stone-700  hover:text-black hover:after:w-full"
-                                    >
-                                        Completed
-                                    </button>
-                                </li>
+                                {typeList.map((item) => (
+                                    <li key={item.type} className="relative border-b">
+                                        <button
+                                            type="button"
+                                            className={`px-14 py-4 ${
+                                                item.type === typeState
+                                                    ? ' text-black after:w-full'
+                                                    : ''
+                                            } after:absolute after:left-0 after:bottom-0 after:h-[3px] after:w-0 after:bg-stone-700 after:content-[''] hover:text-black hover:after:w-full`}
+                                            onClick={() => {
+                                                setTypeState(item.type);
+                                            }}
+                                        >
+                                            {item.text}
+                                        </button>
+                                    </li>
+                                ))}
                             </ul>
-                            <div className="todlList_list mt-2 mr-11 pl-5">
-                                <ul>
-                                    {/* Q3 why can't use chaining operation? */}
-                                    {todoListState.data &&
-                                        todoListState.data.todos.map((todo) => {
-                                            return (
-                                                <li
-                                                    key={todo.id}
-                                                    className="relative flex border-b py-4"
-                                                    onMouseEnter={() => {
-                                                        setIsShownCross(true);
-                                                    }}
-                                                    onMouseLeave={() => {
-                                                        setIsShownCross(false);
-                                                    }}
-                                                >
-                                                    {/* seperate each line and show each  cross? also use hover to change color  for seperate line*/}
-                                                    <input
-                                                        type="checkbox"
-                                                        value={!!todo.completed_at} //!!Q2 make it to boolean cuz it can't be null
-                                                        onChange={() => {
-                                                            checkHandler(todo.id, todo.complted_at);
-                                                        }}
-                                                        className="relative mr-3 h-6 w-6 rounded-full shadow"
-                                                    />
-
-                                                    <CgClose
-                                                        type="button"
-                                                        onClick={() => {
-                                                            deleteHandler(todo.id);
-                                                        }}
-                                                        className={`absolute right-0 bottom-4 text-xl ${
-                                                            isShownCross ? '' : 'hidden'
-                                                        }`}
-                                                    />
-                                                    {editingState.isEditing &&
-                                                    todo.id === editingState.id ? (
-                                                        <input
-                                                            className={`${
-                                                                isToDoChecked ? 'line-through' : ''
-                                                            }`}
-                                                            value={editingState.content}
-                                                            onChange={(e) => {
-                                                                setEditingState((prev) => ({
-                                                                    ...prev,
-                                                                    content: e.target.value,
-                                                                }));
-                                                            }}
-                                                            onBlur={updateToDoHandler}
-                                                        />
-                                                    ) : (
-                                                        <>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    editingHandler(
-                                                                        todo.id,
-                                                                        todo.content
-                                                                    );
-                                                                }}
-                                                            >
-                                                                {todo.content}
-                                                            </button>
-                                                        </>
-                                                    )}
-                                                </li>
-                                            );
-                                        })}
-                                </ul>
-                                <div>
-                                    <div className="footerBox flex justify-between pl-5 pt-6 ">
-                                        <p>
-                                            <span className="mr-2">
-                                                {todoListState.data?.todos?.filter(
-                                                    (item) => !item.completed_at
-                                                )?.length ?? 0}
-                                                {/* ?? if its undefined or null, it will excecute later which shows 0 */}
-                                            </span>
-                                            <span>active item</span>
-                                        </p>
-                                        <p>clear completed item</p>
-                                    </div>
-                                </div>
+                            <div className="mt-2 mr-11 pl-5">
+                                <ToDoList todoList={todoList} getTodoList={getTodoList} />
+                                <ToDoFooter
+                                    todoListState={todoListState}
+                                    getTodoList={getTodoList}
+                                />
                             </div>
                         </div>
                     </div>
@@ -331,4 +94,3 @@ const Home = () => {
         </section>
     );
 };
-export default Home;

@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Swal from 'sweetalert2';
-import Header from '../../components/header-temp';
+import { UnAuthHeader } from '../../components/unauth-header';
 import { useLogIn } from '../../apis/users/log-in';
 
-const Login = () => {
+export const Login = () => {
     const navigate = useNavigate();
 
     const { fetchLogIn, loginState } = useLogIn();
@@ -44,10 +44,10 @@ const Login = () => {
     return (
         <>
             <section className="bg">
-                <div className=" flex items-center justify-center gap-28 px-3  py-20">
-                    <Header />
-                    <section className="w-1/4 ">
-                        <h2 className="text-center text-2xl font-bold ">Making A To Do List </h2>
+                <div className="flex items-center justify-center gap-28 px-3 py-20">
+                    <UnAuthHeader />
+                    <section className="w-1/4">
+                        <h2 className="text-center text-2xl font-bold">Making A To Do List </h2>
                         <h3 className="pb-6 text-center font-bold text-yellow-900">
                             - making your life easier -
                         </h3>
@@ -64,7 +64,7 @@ const Login = () => {
                                         },
                                         pattern: {
                                             value: /^\S+@\S+$/i,
-                                            message: 'email address is not correct ',
+                                            message: 'email address is not correct',
                                         },
                                     })}
                                     className="w-full rounded-xl py-3 px-4"
@@ -73,7 +73,7 @@ const Login = () => {
                                     <p className="text-red-600">{errors.email.message}</p>
                                 )}
                             </div>
-                            <div className=" pb-6">
+                            <div className="pb-6">
                                 <label htmlFor="password">Password</label>
                                 <input
                                     id="password"
@@ -98,12 +98,12 @@ const Login = () => {
                             <div className="flex items-center justify-center pb-6">
                                 <button
                                     type="submit"
-                                    className="   w-40 rounded-xl bg-slate-700 py-3 text-white "
+                                    className="w-40 rounded-xl bg-slate-700 py-3 text-white"
                                 >
                                     {loginState.isLoading ? (
                                         <>
-                                            <span className="  flex items-center justify-center">
-                                                <AiOutlineLoading3Quarters className=" mr-3 animate-spin " />
+                                            <span className="flex items-center justify-center">
+                                                <AiOutlineLoading3Quarters className="mr-3 animate-spin" />
                                                 Loading...
                                             </span>
                                         </>
@@ -118,7 +118,7 @@ const Login = () => {
                         <div className="flex items-center justify-center">
                             <button
                                 onClick={() => navigate('/register')}
-                                className=" font-bold text-yellow-900"
+                                className="font-bold text-yellow-900"
                             >
                                 Need an Account?
                             </button>
@@ -129,4 +129,3 @@ const Login = () => {
         </>
     );
 };
-export default Login;

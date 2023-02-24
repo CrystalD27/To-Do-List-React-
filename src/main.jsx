@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/home';
-import Login from './pages/login';
-import Register from './pages/register';
-import NotFound from './pages/not-found';
-import AuthRoute from './components/auth-route';
-import UnAuthRoute from './components/unauth-route';
+import { Home } from './pages/home';
+import { Login } from './pages/login';
+import { Register } from './pages/register';
+import { NotFound } from './pages/not-found';
+import { AuthRoute } from './components/auth-route';
+import { UnAuthRoute } from './components/unauth-route';
 
 const router = createBrowserRouter([
     {
