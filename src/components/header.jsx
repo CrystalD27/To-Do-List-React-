@@ -4,6 +4,10 @@ export const Header = () => {
     const navigate = useNavigate();
     const getNickname = () => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        if (!userInfo) {
+            navigate('/login');
+            return '';
+        }
         return userInfo.nickname;
     };
 
