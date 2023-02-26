@@ -29,6 +29,7 @@ export const Register = () => {
                 text: 'Your account has been successfully created',
                 showConfirmButton: false,
                 timer: 3000,
+                iconColor: '#FFBF00',
             });
             navigate('/login');
         } else if (registerState.isError) {

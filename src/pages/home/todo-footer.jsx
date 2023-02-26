@@ -9,15 +9,24 @@ export const ToDoFooter = (props) => {
     const deleteAllHandler = async () => {
         try {
             const completedTodos = todoListState.data?.todos?.filter((todo) => todo.completed_at);
-            completedTodos.forEach(async (todo) => {
-                await deleteToDo(todo.id);
-            });
+            await Promise.all(completedTodos.map((todo) => deleteToDo(todo.id)));
             await getTodoList();
-            console.log(completedTodos);
             if (completedTodos.length === 0) {
-                Swal.fire('There is no complted item');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'There is no completed item',
+                    iconColor: '#FFBF00',
+                });
+                Swal.fire('There is no completed item');
             } else {
-                Swal.fire('Completed items have been deleted');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Completed items have been deleted',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    iconColor: '#FFBF00',
+                });
             }
         } catch (error) {
             console.error(error);
@@ -25,7 +34,7 @@ export const ToDoFooter = (props) => {
     };
 
     return (
-        <div className="footerBox flex justify-between pl-5 pt-6">
+        <div className="flex justify-between pl-5">
             <p>
                 <span className="mr-2">{activeTodoCount}</span>
                 <span>{activeTodoText}</span>

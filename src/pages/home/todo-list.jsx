@@ -3,7 +3,7 @@ export const ToDoList = (props) => {
     const { todoList, getTodoList } = props;
 
     return (
-        <ul>
+        <ul className="pb-6">
             {todoList.map((todo) => (
                 <ToDo
                     key={todo.id}

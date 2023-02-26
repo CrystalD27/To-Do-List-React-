@@ -20,7 +20,13 @@ export const ToDo = (props) => {
         try {
             await toggleToDo(id);
             await getTodoList();
-            Swal.fire('The state has been updated');
+            Swal.fire({
+                icon: 'success',
+                title: 'The item has been updated',
+                showConfirmButton: false,
+                timer: 1500,
+                iconColor: '#FFBF00',
+            });
         } catch (error) {
             console.error(error);
         }
@@ -29,7 +35,13 @@ export const ToDo = (props) => {
         try {
             await deleteToDo(id);
             await getTodoList();
-            Swal.fire('The item has been deleted');
+            Swal.fire({
+                icon: 'success',
+                title: 'The item has been deleted',
+                showConfirmButton: false,
+                timer: 1500,
+                iconColor: '#FFBF00',
+            });
         } catch (error) {
             console.error(error);
         }
