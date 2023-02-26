@@ -4,10 +4,6 @@ export const Header = () => {
     const navigate = useNavigate();
     const getNickname = () => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-        if (!userInfo) {
-            navigate('/login');
-            return '';
-        }
         return userInfo.nickname;
     };
 
@@ -16,7 +12,7 @@ export const Header = () => {
         navigate('/login');
     };
     return (
-        <nav className="flex items-center justify-between">
+        <nav className="mb-10 flex items-center justify-between">
             <div className="flex items-center">
                 <MdAssignmentTurnedIn />
                 <h3 className="font-bold">ONLINE TODO LIST</h3>
