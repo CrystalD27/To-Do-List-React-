@@ -41,8 +41,8 @@ export const Register = () => {
     }, [registerState]);
     return (
         <section className="bg">
-            <div className="flex flex-col items-center justify-center py-20 sm:flex sm:gap-28">
-                <UnAuthHeader />
+            <div className="flex flex-col items-center justify-center py-20 sm:flex sm:flex-row sm:gap-28">
+                <UnAuthHeader className="hidden sm:block" />
                 <div className="sm:w-1/4">
                     <h2 className="pb-6 text-center text-2xl font-bold">Creat a new account</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
