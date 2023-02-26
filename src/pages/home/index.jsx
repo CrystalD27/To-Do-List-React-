@@ -4,6 +4,7 @@ import { AddNewToDo } from './todo-add-new';
 import { ToDoList } from './todo-list';
 import { ToDoFooter } from './todo-footer';
 import { useGetTodoList } from '../../apis/todos/get-todo-list';
+import emptyImage from '../../assets/img/empty.png';
 
 export const Home = () => {
     const { todoListState, getTodoList } = useGetTodoList();
@@ -51,11 +52,7 @@ export const Home = () => {
                         {todoListState?.data?.todos.length === 0 ? (
                             <div className="mt-14">
                                 <p className="mb-4 text-center text-xl">There is no todo</p>
-                                <img
-                                    className="w-[487.3px]"
-                                    src="/src/assets/img/empty.png"
-                                    alt="empty"
-                                />
+                                <img className="w-[487.3px]" src={emptyImage} alt="empty" />
                             </div>
                         ) : (
                             <div className="rounded-xl bg-white pb-8">
