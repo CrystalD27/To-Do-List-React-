@@ -52,7 +52,11 @@ export const Home = () => {
                         {todoListState?.data?.todos.length === 0 ? (
                             <div className="mt-14">
                                 <p className="mb-4 text-center text-xl">There is no todo</p>
-                                <img className="w-[487.3px]" src={emptyImage} alt="empty" />
+                                <img
+                                    className="w-[334px] sm:w-[487.3px]"
+                                    src={emptyImage}
+                                    alt="empty"
+                                />
                             </div>
                         ) : (
                             <div className="rounded-xl bg-white pb-6 sm:pb-8">
