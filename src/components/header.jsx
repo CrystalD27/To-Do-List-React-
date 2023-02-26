@@ -18,7 +18,7 @@ export const Header = () => {
                 <h3 className="font-bold">ONLINE TODO LIST</h3>
             </div>
             <div className="flex">
-                <span className="mr-6 font-bold">{`${getNickname()}'s todo list`}</span>
+                <span className="hidden sm:mr-6 sm:block sm:font-bold">{`${getNickname()}'s todo list`}</span>
                 <button onClick={logOutHandler}>Log out</button>
             </div>
         </nav>

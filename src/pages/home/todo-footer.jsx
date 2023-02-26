@@ -34,9 +34,9 @@ export const ToDoFooter = (props) => {
     };
 
     return (
-        <div className="flex justify-between pl-5">
+        <div className="flex justify-between sm:pl-5">
             <p>
-                <span className="mr-2">{activeTodoCount}</span>
+                <span className="mr-2 sm:mr-2">{activeTodoCount}</span>
                 <span>{activeTodoText}</span>
             </p>
             <button className="text-gray-400" type="button" onClick={deleteAllHandler}>

@@ -52,10 +52,10 @@ export const AddNewToDo = (props) => {
     };
     return (
         <form>
-            <div className="relative flex justify-center">
+            <div className="relative flex justify-center sm:relative sm:flex sm:justify-center">
                 <input
                     type="text"
-                    className="mb-4 w-full rounded-xl border py-3 pl-4"
+                    className="mb-4 w-full rounded-xl border py-3 pl-4 sm:w-full"
                     placeholder="Add new todo.."
                     onChange={(e) => setNewTodo(e.target.value)}
                     onKeyDown={(e) => {
@@ -65,7 +65,11 @@ export const AddNewToDo = (props) => {
                     }}
                     value={newTodo}
                 />
-                <button type="button" onClick={addItemHandler} className="absolute right-2 top-2">
+                <button
+                    type="button"
+                    onClick={addItemHandler}
+                    className="absolute right-2 top-2 sm:absolute sm:right-2 sm:top-2"
+                >
                     <FiPlus className="rounded-xl bg-black text-4xl text-white" />
                 </button>
             </div>

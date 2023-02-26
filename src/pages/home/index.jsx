@@ -44,7 +44,7 @@ export const Home = () => {
 
     return (
         <section className="h-screen bg-[url('assets/img/bg.png')] bg-cover bg-no-repeat p-4">
-            <div className="px-9">
+            <div className="sm:px-9">
                 <Header />
                 <div className="flex justify-center pb-6">
                     <div className="flex flex-col rounded-xl py-4">
@@ -55,13 +55,13 @@ export const Home = () => {
                                 <img className="w-[487.3px]" src={emptyImage} alt="empty" />
                             </div>
                         ) : (
-                            <div className="rounded-xl bg-white pb-8">
+                            <div className="rounded-xl bg-white pb-6 sm:pb-8">
                                 <ul className="mb-2 flex justify-between text-stone-500">
                                     {typeList.map((item) => (
                                         <li key={item.type} className="relative border-b">
                                             <button
                                                 type="button"
-                                                className={`px-14 py-4 ${
+                                                className={`px-8 py-4 sm:px-14 sm:py-4 ${
                                                     item.type === typeState
                                                         ? ' text-black after:w-full'
                                                         : ''
@@ -75,7 +75,7 @@ export const Home = () => {
                                         </li>
                                     ))}
                                 </ul>
-                                <div className="mr-11 pl-5">
+                                <div className="mr-2 pl-3 sm:mr-11 sm:pl-5">
                                     <ToDoList todoList={todoList} getTodoList={getTodoList} />
                                     <ToDoFooter
                                         todoListState={todoListState}
