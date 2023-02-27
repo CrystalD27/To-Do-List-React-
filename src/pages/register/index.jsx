@@ -43,9 +43,9 @@ export const Register = () => {
         <section className="bg">
             <div className="flex flex-col items-center justify-center py-20 sm:flex sm:flex-row sm:gap-28">
                 <UnAuthHeader className="hidden sm:block" />
-                <div className="w-7/12 sm:w-1/4">
+                <div className="sm:w-1/4">
                     <h2 className="pb-6 text-center text-2xl font-bold">Creat a new account</h2>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form className="px-8" onSubmit={handleSubmit(onSubmit)}>
                         <div className="pb-4">
                             <label htmlFor="email">Email</label>
                             <input
