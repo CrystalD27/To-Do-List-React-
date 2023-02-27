@@ -1,6 +1,8 @@
 import { baseURL, getToken } from '../../utils';
+import { useState } from 'react';
 
 export const useToggleToDo = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const toggleToDo = async (id) => {
         try {
             await fetch(`${baseURL}todos/${id}/toggle`, {
@@ -10,9 +12,13 @@ export const useToggleToDo = () => {
                     Authorization: getToken(),
                 },
             });
+            setIsLoading(true);
         } catch (error) {
             console.error(error);
+            setIsLoading(true);
+        } finally {
+            setIsLoading(false);
         }
     };
-    return { toggleToDo };
+    return { toggleToDo, isLoading };
 };

@@ -8,7 +8,7 @@ import { useEditToDo } from '../../apis/todos/edit-todo';
 export const ToDo = (props) => {
     const { id, completedAt, content, getTodoList } = props;
     const [isShownCross, setIsShownCross] = useState(false);
-    const { toggleToDo } = useToggleToDo();
+    const { toggleToDo, isLoading } = useToggleToDo();
     const { deleteToDo } = useDeleteToDo();
     const { editToDo } = useEditToDo();
     const [editingState, setEditingState] = useState({
@@ -81,6 +81,7 @@ export const ToDo = (props) => {
                     checkHandler(id, completedAt);
                 }}
                 className="relative mr-3 h-6 w-6 rounded-full shadow"
+                disabled={isLoading}
             />
 
             <CgClose
