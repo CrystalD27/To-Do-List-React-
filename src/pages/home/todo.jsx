@@ -89,7 +89,9 @@ export const ToDo = (props) => {
                 onClick={() => {
                     deleteHandler(id);
                 }}
-                className={`absolute right-0 bottom-4 text-xl ${isShownCross ? '' : 'hidden'}`}
+                className={`absolute right-0 bottom-4 bg-transparent text-xl ${
+                    isShownCross ? '' : 'hidden'
+                }`}
             />
             {editingState.isEditing && id === editingState.id ? (
                 <input
