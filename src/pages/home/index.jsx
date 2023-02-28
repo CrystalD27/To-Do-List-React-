@@ -51,7 +51,7 @@ export const Home = () => {
                         <AddNewToDo todoListState={todoListState} getTodoList={getTodoList} />
                         {todoListState?.data?.todos.length === 0 ? (
                             <div className="mt-14">
-                                <p className="mb-4 text-center text-xl">There is no todo</p>
+                                <p className="mb-4 text-center text-xl">There is nothing to do</p>
                                 <img
                                     className="w-[334px] sm:w-[487.3px]"
                                     src={emptyImage}

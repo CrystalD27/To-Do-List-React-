@@ -83,16 +83,18 @@ export const ToDo = (props) => {
                 className="relative mr-3 h-6 w-6 rounded-full shadow"
                 disabled={isLoading}
             />
-
-            <CgClose
+            <button
                 type="button"
                 onClick={() => {
                     deleteHandler(id);
                 }}
-                className={`absolute right-0 bottom-4 bg-transparent text-xl ${
-                    isShownCross ? '' : 'hidden'
-                }`}
-            />
+            >
+                <CgClose
+                    className={`absolute right-0 bottom-4 bg-transparent text-xl ${
+                        isShownCross ? '' : 'hidden'
+                    }`}
+                />
+            </button>
             {editingState.isEditing && id === editingState.id ? (
                 <input
                     value={editingState.content}

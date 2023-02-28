@@ -56,7 +56,7 @@ export const AddNewToDo = (props) => {
                 <input
                     type="text"
                     className="mb-4 w-full rounded-xl border py-3 pl-4 sm:w-full"
-                    placeholder="Add new todo.."
+                    placeholder="Add new task"
                     onChange={(e) => setNewTodo(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {

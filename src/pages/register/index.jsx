@@ -25,7 +25,7 @@ export const Register = () => {
         if (registerState.data) {
             Swal.fire({
                 icon: 'success',
-                title: 'Congradulations!',
+                title: 'Congratulations!',
                 text: 'Your account has been successfully created',
                 showConfirmButton: false,
                 timer: 3000,
@@ -61,7 +61,7 @@ export const Register = () => {
                                 })}
                                 className="w-full rounded-xl py-3 px-4"
                                 type="text"
-                                placeholder="youremail@gmail.com"
+                                placeholder="email@gmail.com"
                             />
                             {errors.email && <p className="text-red-600">{errors.email.message}</p>}
                         </div>
