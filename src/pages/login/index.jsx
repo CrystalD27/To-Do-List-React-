@@ -46,7 +46,7 @@ export const Login = () => {
             <section className="bg">
                 <div className="items-center justify-center py-20 sm:flex sm:gap-28 sm:px-3">
                     <UnAuthHeader />
-                    <section className="flex flex-col items-center justify-center sm:w-1/2">
+                    <section className="flex flex-col items-center justify-center">
                         <h2 className="text-center text-2xl font-bold">Making A To Do List </h2>
                         <h3 className="pb-6 text-center font-bold text-yellow-900">
                             - making your life easier -
